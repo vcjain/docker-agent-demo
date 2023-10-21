@@ -15,7 +15,7 @@ pipeline{
         stage('Build'){
             steps{
                 echo "Build Stage is in progress "
-                sh '/opt/apache-maven-3.6.3/bin/mvn compile'
+                sh 'mvn compile'
             }
         }
     }
