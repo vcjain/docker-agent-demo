@@ -1,23 +1,33 @@
-pipeline{
-    agent {
+pipeline {
+  agent {
         dockerfile {
             dir '.'
-            filename 'Dockerfile-agent'
+            filename 'Dockerfile'
             label 'ssh'
+            args '-v /var/run/docker.sock:/var/run/docker.sock -u root'
         }
     }
     stages{
-        stage('Checkout'){
+        stage('checkout'){
             steps{
                 checkout poll: false, scm: scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/vcjain/docker-agent-demo.git']])
-            }
+            }    
         }
         stage('Build'){
             steps{
-                echo "Build Stage is in progress "
-                sh 'mvn compile'
+                echo 'Building Maven project'
+                sh 'mvn install'
+                archiveArtifacts artifacts: 'target/calculator-0.0.1-SNAPSHOT.jar', followSymlinks: false
+            }
+        }
+        stage('Test'){
+            steps{
+                echo 'Building Maven project'
+                sh 'mvn test'
+                junit '**/target/surefire-reports/*.xml'
+                jacoco classPattern: '**/target/classes', exclusionPattern: '**/*Test*.class', execPattern: '**/target/jacoco.exec', inclusionPattern: '**/*.class', sourceExclusionPattern: 'generated/**/*.java', sourceInclusionPattern: '**/*.java'
             }
         }
     }
-
+  
 }
