@@ -2,9 +2,5 @@ FROM ubuntu
 
 RUN apt-get update
 RUN apt-get install openjdk-17-jdk -y
-RUN apt-get install wget -y
-RUN apt-get install tar -y
-RUN wget https://mirrors.estointernet.in/apache/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz
-RUN tar -xvf apache-maven-3.6.3-bin.tar.gz
-RUN mv apache-maven-3.6.3 /opt/
-RUN export PATH=/opt/apache-maven-3.6.3/bin:$PATH
+RUN apt-get install maven -y
+RUN mvn --version
