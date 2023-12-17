@@ -1,0 +1,30 @@
+pipeline {
+    
+    agent {
+        label 'ssh'
+    }
+    
+    stages{
+        stage('checkout'){
+            steps{
+                checkout poll: false, scm: scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/vcjain/docker-agent-demo.git']])
+            }    
+        }
+        stage('Build Image'){
+            steps{
+                echo "Build Docker Image"
+                sh "docker build -t vcjain/testdocker:v1 ."
+            }
+           
+        }
+        stage('Push Image'){
+            steps{
+                echo "Pushing Docker Image"
+                withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'DOCKER_PASS', usernameVariable: 'DOCKER_USER')]) {
+                    sh " docker login -u $DOCKER_USER -p $DOCKER_PASS"
+                    sh "docker push vcjain/testdocker:v1"
+               }  
+            }
+        }
+    }
+}
