@@ -45,7 +45,13 @@
 - https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-22-04
 - Relaunch Instance
 
+## Docker Hub Account
+- Open hub.docker.com
+- Signup/login on hub.docker.com
+
+### Jenkins steps
 - Install Docker Pipeline plugin in Jenkins
+- Create a credentials "dockerhub" (username and password) for hub.docker.com
 
 ----
 
