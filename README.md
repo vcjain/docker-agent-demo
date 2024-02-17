@@ -3,7 +3,7 @@
 ## Provision VM
 
 - Provision 2 Ec2 instance on AWS. One instance will be used for Java Agent and another for ssh connection
-- While luanching instance ensure to define key
+- While launching instance ensure to define public-private key
 
 
 
