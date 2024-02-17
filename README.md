@@ -13,6 +13,7 @@
 - Enable TCP port for inbound agents
 - Select Fixed, and give port value as 50000
 - Install plugin Docker and Docker Pipeline
+- Update security group to allow all TCP port for training on Jenkins master
 ```
 
 There are different method that we can use to add a Node as a Slave to Jenkins
