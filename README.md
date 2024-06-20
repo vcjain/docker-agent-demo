@@ -28,9 +28,13 @@ We can connect a Node as Slave using JNLP. In this method a Jaba agent is execut
 , master node and it will execute them on the slave machine.
 It is important for a slave node to run Java agent continusely, otherwise slave connection will break.
 
+
+ON Slave Machine, Update package & Install Java on slave node
 ```
-ON Slave Machine,
-- Update package & Install Java on slave node
+sudo apt-get update
+```
+```
+sudo apt-get install openjdk-17-jdk -y
 ```
 
 ```
