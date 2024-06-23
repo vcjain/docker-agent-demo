@@ -31,13 +31,6 @@ pipeline {
             
         }
         stage('Deploy'){
-            input {
-              message 'Do you want to deploy build?'
-              ok 'Yes I want'
-              parameters {
-                string description: 'Who is Approver?', name: 'Approver'
-              }
-            }
             steps{
                 echo 'Deploying Build'
             }
