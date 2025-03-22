@@ -1,0 +1,51 @@
+pipeline {
+  agent any
+environment {
+    IMAGE = "vcjain/my-app"
+    TAG = "latest"
+  }
+stages {
+    stage('checkout'){
+            steps{
+                checkout poll: false, scm: scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/vcjain/docker-agent-demo.git']])
+            }    
+        }
+        stage('Build Image'){
+            steps{
+                echo "Build Docker Image"
+                withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'DOCKER_PASS', usernameVariable: 'DOCKER_USER')]){
+                    sh "docker build -f Dockerfile-nginx -t $IMAGE:$TAG ."  
+                }
+                
+            }
+           
+        }
+        stage('Push Image'){
+            steps{
+                echo "Pushing Docker Image"
+                withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'DOCKER_PASS', usernameVariable: 'DOCKER_USER')]) {
+                    sh " docker login -u $DOCKER_USER -p $DOCKER_PASS"
+                    sh "docker push $IMAGE:$TAG"
+               }  
+            }
+        }
+    
+        stage('Run Unit Tests') {
+          steps {
+              sh 'docker run --rm -v $PWD:/app -w /app $IMAGE:$TAG mvn test'
+          }
+        }
+
+        stage('Deploy & Expose') {
+            steps {
+                sh 'docker run -d -p 8081:80 --name my-app-container $IMAGE:$TAG'
+            }
+        }
+        stage('Teardown') {
+          steps {
+            input message: 'App running at port 8081. Press continue to remove.'
+            sh 'docker rm -f my-app-container'
+          }
+        }
+    }
+}
