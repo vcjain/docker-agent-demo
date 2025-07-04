@@ -94,5 +94,7 @@ With this method, we can optimally use our resources.
 # Usages
 
 - Launch pipeline using Jenkinsfile for basic Java application on a agent with Java already installed
-- Launch pipeline using Jenkinsfile-docker for using agent as docker with image
-- Launch pipeline using Jenkinsfile-dockerfile for using agent as docker with dockerfile kept in the repo along with Jenkinsfile
+- Launch pipeline using Jenkinsfile for basic Java application on a agent with ssh, having docker installed, to create and build Java Project
+- Launch pipeline using Jenkinsfile-docker for using docker conatiner as agent with a already existing maven image to build Java Project
+- Launch pipeline using Jenkinsfile-dockerfile for using docker conatiner as agent (created using dockerfile kept in the repo) to build a Java Project
+- Launch pipeline using Jenkinsfile-dockeragent for using docker conatiner as agent and running build docker image and push to docker registry
