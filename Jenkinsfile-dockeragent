@@ -1,0 +1,38 @@
+pipeline {
+  agent {
+    docker {
+      image 'docker:20.10.16' // Lightweight Alpine-based image with Docker CLI
+      args '-u root -v /var/run/docker.sock:/var/run/docker.sock'
+    }
+  }
+    stages{
+        stage('checkout'){
+            steps{
+                checkout poll: false, scm: scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/vcjain/docker-agent-demo.git']])
+            }    
+        }
+        stage('Docker Build') {
+          steps {
+            sh 'docker version' // Verifies Docker CLI can talk to host daemon
+            sh 'docker build -t vcjain/testubuntu .'
+          }
+        }
+        
+         stage('Docker Push') {
+      steps {
+        withCredentials([usernamePassword(
+          credentialsId: 'docker-hub',
+          usernameVariable: 'DOCKER_USER',
+          passwordVariable: 'DOCKER_PASS'
+        )]) {
+          sh 'echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin'
+          sh 'docker push vcjain/testubuntu'
+        }
+      }
+    }
+
+    }
+  
+}
+
+
