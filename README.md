@@ -5,6 +5,8 @@
 - Provision 2 Ec2 instance on AWS. One instance will be used for Java Agent and another for ssh connection
 - While launching instance ensure to define public-private key
 
+* If you are working on single machine, then you can follow steps in SSHAgent-lab.md file to set up same machine as slave for practice. * 
+
 
 
 ## Configuring Jenkins
