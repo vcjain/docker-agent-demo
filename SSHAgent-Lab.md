@@ -24,7 +24,11 @@ Append the public key to `authorized_keys`:
 
 ```bash
 cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
+```
+```
 chmod 600 ~/.ssh/authorized_keys
+```
+```
 chmod 700 ~/.ssh
 ```
 
@@ -68,7 +72,11 @@ Now follow the earlier steps:
 * Use launch method: **"SSH"**
 * Host: your public IP
 * Remote directory: `/home/labuser/jenkins-agent`
+* Select Method Lanuch By SSH
+* Select Host as Public IP of your Lab
 * Credentials: Select `labuser-ssh-key`
+* Select Host Key Verification Strategy as  - No verifying Verification strategy
+
 
 ---
 
