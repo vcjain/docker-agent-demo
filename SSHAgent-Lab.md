@@ -1,4 +1,5 @@
-## Step 1: Generate SSH Key Pair for `labuser`
+## We can use below steps to set up lab machine as slave agent. 
+### Step 1: Generate SSH Key Pair for `labuser`
 
 Run the following as the `labuser` user:
 
