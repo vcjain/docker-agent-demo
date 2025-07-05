@@ -38,7 +38,6 @@ Manage Jenkins → Manage Nodes and Clouds → Configure Clouds
 - For **local Docker daemon** (running on same host as Jenkins):
 
 ```
-
 unix:///var/run/docker.sock
 
 ```
